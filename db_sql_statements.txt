@@ -1,0 +1,35 @@
+CREATE TABLE publisher(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR (30) NOT NULL,
+    address VARCHAR (50) NOT NULL,
+    size ENUM ('big', 'medium', 'small') NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE author(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(30) NOT NULL,
+    surname VARCHAR(30) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE media_type(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(10) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE medias(
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(20) NOT NULL,
+    img_link VARCHAR(100) NOT NULL,
+    fk_author_id INT NOT NULL,
+    isbn VARCHAR(13) NOT NULL,
+    short_description VARCHAR(50) NOT NULL,
+    publish_date DATE NOT NULL,
+    fk_publisher_id INT NOT NULL,
+    status ENUM ('available', 'reserved'),
+    PRIMARY KEY (id),
+    FOREIGN KEY (fk_author_id) REFERENCES author(id),
+    FOREIGN KEY (fk_publisher_id) REFERENCES publisher(id)    
+);
