@@ -58,7 +58,7 @@
 
 		<?php 
 
-			$sql=mysqli_query($mysqli, "SELECT * FROM `medias` INNER JOIN `author` ON fk_author_id = author.id INNER JOIN `media_type` ON fk_media_type = media_type.id");
+			$sql=mysqli_query($mysqli, "SELECT *, medias.id AS id FROM `medias` INNER JOIN `author` ON fk_author_id = author.id INNER JOIN `media_type` ON fk_media_type = media_type.id");
 
 			$count = mysqli_num_rows($sql);
 

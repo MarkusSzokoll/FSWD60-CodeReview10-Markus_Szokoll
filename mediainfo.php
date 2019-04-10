@@ -51,25 +51,22 @@
 	</div>
 	<div class="container">
 		<div class="heading">
-			<h1>Detailed Information for "<?php echo $row["mediaTitle"] ?>"</h1>
+			<h1>Detailed Information for "<?php echo $row["title"] ?>"</h1>
 		</div>
 		<a class="mainpageback" href="index.php"><i class="fas fa-arrow-left"></i>Back to main page</a>
 		<hr>
 		<?php
 
-			$sqlAuthor = mysqli_query($mysqli, "SELECT * FROM `author, medias` WHERE medias.id = {$id} AND author.id = medias.fk_author_id");
+			$sqlAuthor = mysqli_query($mysqli, "SELECT * FROM author, medias WHERE medias.id = {$id} AND author.id = medias.fk_author_id");
 			$rowAuthor = mysqli_fetch_array($sqlAuthor);
 
-			$sqlType = mysqli_query($mysqli, "SELECT * FROM `type` INNER JOIN `media` ON `type_id` = `fk_type_id` WHERE media_id = {$id}");
+			$sqlType = mysqli_query($mysqli, "SELECT * FROM media_type, medias WHERE media_type.id = medias.fk_media_type AND media_type.id = {$id}");
 			$rowType = mysqli_fetch_array($sqlType);
 
-			$sqlPublisher = mysqli_query($mysqli, "SELECT * FROM `publisher` INNER JOIN `media` ON `publisher_id` = `fk_publisher_id` WHERE media_id = {$id}");
+			$sqlPublisher = mysqli_query($mysqli, "SELECT * FROM publisher, medias WHERE publisher.id = medias.fk_publisher_id AND publisher.id = {$id}");
 			$rowPublisher = mysqli_fetch_array($sqlPublisher);
 
-			$sqlLibrary = mysqli_query($mysqli, "SELECT * FROM `library` INNER JOIN `media` ON `library_id` = `fk_library_id` WHERE media_id = {$id}");
-			$rowLibrary = mysqli_fetch_assoc($sqlLibrary);
-
-			if($row["mediaStatus"] == 1){
+			if($row["status"] == 'available'){
 				$status = "Yes";
 			}
 			else{
@@ -80,8 +77,8 @@
 
 			if(isset($_SESSION['user'])){
 
-			$editbuttons = "<a href='delete.php?id=". $row['media_id']."'><button class='btn btn-danger media' type='button'>Delete</button></a>
-					<a href='update.php?id=". $row['media_id']."'><button class='btn btn-primary media' type='button'>Edit</button></a>";
+			$editbuttons = "<a href='delete.php?id=". $row['id']."'><button class='btn btn-danger media' type='button'>Delete</button></a>
+					<a href='update.php?id=". $row['id']."'><button class='btn btn-primary media' type='button'>Edit</button></a>";
 			}
 
 		echo "
@@ -89,19 +86,19 @@
 			<div class='row'>
 				<div class='thumbnails col-md-4'>
 					<div class='image'>
-						<img src='". $row["mediaImage"]. "' alt='image'>
+						<img src='". $row["img_link"]. "' alt='image'>
 					</div>
-					<p>ISBN: ". $row["mediaISBN"]. "</p>
+					<p>ISBN: ". $row["isbn"]. "</p>
 				</div>
 				<div class='data col-md-7'>
-					<h2>". $row["mediaTitle"]. "</h2>
-					<p>by: ". $rowAuthor["authorFirstName"]. " ". $rowAuthor["authorSurName"]. "</p>
-					<p>type: ". $rowType["typeName"]. "</p>
-					<p>Publisher: ". $rowPublisher["publisherName"]. "</p>
+					<h2>". $row["title"]. "</h2>
+					<p>by: ". $rowAuthor["name"]. " ". $rowAuthor["surname"]. "</p>
+					<p>type: ". $rowType["name"]. "</p>
+					<p>Publisher: ". $rowPublisher["name"]. "</p>
 					<p>Available: ". $status. "</p>
 					<hr>
 					<p>Description</p>
-					<p class='desc'>". $row["mediaDesc"]. "</p>
+					<p class='desc'>". $row["short_description"]. "</p>
 					". $editbuttons. "
 				</div>
 			</div>

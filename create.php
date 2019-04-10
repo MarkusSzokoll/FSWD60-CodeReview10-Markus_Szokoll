@@ -20,7 +20,7 @@
 		$short_description = $_POST['short_description'];
 		$status = $_POST['status'];
 
-		$sql = "INSERT INTO `media`(`mediaTitle`, `mediaImage`, `mediaISBN`, `mediaShort_description`, `mediaStatus`, `fk_type_id`, `fk_author_id`) VALUES ('$title', '$img_link', '$isbn', '$short_description', $status, '$fk_media_type', '$fk_author_id');";
+		$sql = "INSERT INTO `medias`(`title`, `img_link`, `isbn`, `short_description`, `status`, `fk_media_type`, `fk_author_id`, `fk_publisher_id`) VALUES ('$title', '$img_link', '$isbn', '$short_description', $status, '$fk_media_type', '$fk_author_id', '$fk_publisher_id');";
 
 		if($mysqli->query($sql) === TRUE) {
 		   header("Location: a_create.php");
@@ -67,9 +67,9 @@
 			<p>Title</p>
 			<input class="field" type="text" name="title" maxlength="150" required>
 			<p>Media Image (url)</p>
-			<input class="field" type="text" name="img" maxlength="500" required>
+			<input class="field" type="text" name="img_link" maxlength="500" required>
 			<p>Type</p>
-			<select class="field" name="type">
+			<select class="field" name="fk_media_type">
 				<?php
 				$sql = mysqli_query($mysqli, "SELECT * FROM `media_type`");
 
@@ -78,9 +78,18 @@
 				}
 				?>
 			</select>
-			
+			<p>Publisher</p>
+			<select class="field" name="fk_publisher_id">
+				<?php
+				$sql = mysqli_query($mysqli, "SELECT * FROM `publisher`");
+
+				while($rowType = mysqli_fetch_assoc($sql)){
+					echo "<option id=". $rowType["id"]. ">". $rowType["id"]. ")  ". $rowType["name"]. "</option>";
+				}
+				?>
+			</select>
 			<p>Author</p>
-			<select class="field" name="author">
+			<select class="field" name="fk_author_id">
 				<?php 
 				$sql = mysqli_query($mysqli, "SELECT * FROM `author`");
 				while($rowAuthor = mysqli_fetch_assoc($sql)){
@@ -91,11 +100,11 @@
 			<p>ISBN</p>
 			<input class="field" type="text" name="isbn" maxlength="25" required>
 			<p>Short Description</p>
-			<textarea name="desc" maxlength="250" required></textarea>
+			<textarea name="short_description" maxlength="250" required></textarea>
 			<p>Status</p>
 			<select class="field" name="status">
-				<option value="0">0) Not available</option>
-				<option value="1">1) Available</option>
+				<option value="reserved"> reserved</option>
+				<option value="available"> available</option>
 			</select>
 			
 			<input class="btn btn-success" type="submit" name="create" value="CREATE">

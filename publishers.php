@@ -53,7 +53,7 @@
 		$sql = mysqli_query($mysqli, "SELECT * FROM `publisher`");
 
 		while($rowPublisher = mysqli_fetch_assoc($sql)){
-			echo "<option value=". $rowPublisher["publisher_id"]. ">". $rowPublisher["publisher_id"]. ")  ". $rowPublisher["publisherName"]. "</option>";
+			echo "<option value=". $rowPublisher["id"]. ">". $rowPublisher["id"]. ")  ". $rowPublisher["name"]. "</option>";
 		}
 			
 		echo '</select>';
@@ -62,10 +62,10 @@
 		echo '</form>';
 
 		if(isset($_GET['id'])) {
-			$sql = mysqli_query($mysqli, "SELECT * FROM `media` WHERE fk_publisher_id = ".$_GET['id']);
+			$sql = mysqli_query($mysqli, "SELECT * FROM `medias` WHERE fk_publisher_id = ".$_GET['id']);
 			echo '<ul>';
 			while($rowMedia = mysqli_fetch_assoc($sql)){
-				echo "<li>".$rowMedia['mediaTitle']."</li>";
+				echo "<li>".$rowMedia['title']."</li>";
 			}
 			echo '</ul>';
 		}
