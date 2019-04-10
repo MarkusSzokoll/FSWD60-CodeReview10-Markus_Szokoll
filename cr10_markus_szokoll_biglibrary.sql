@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2019 at 04:32 PM
+-- Generation Time: Apr 10, 2019 at 05:17 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -137,6 +137,28 @@ INSERT INTO `publisher` (`id`, `name`, `address`, `size`) VALUES
 (10, 'Brunnen Verlag', 'Gießen', 'small'),
 (11, 'Bund-Verlag', 'Frankfurt am Main', 'big');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(10) NOT NULL,
+  `userFirstName` varchar(50) DEFAULT NULL,
+  `userLastName` varchar(50) DEFAULT NULL,
+  `userEmail` varchar(50) DEFAULT NULL,
+  `userPassword` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `userFirstName`, `userLastName`, `userEmail`, `userPassword`) VALUES
+(1, 'Markus', 'Szokoll', 'markus.szokoll@gmx.at', '12345'),
+(2, 'a', 'b', 'c', '18ac3e7343f016890c510e93f935261169d9e3f565436429830faf0934f4f8e4');
+
 --
 -- Indexes for dumped tables
 --
@@ -168,6 +190,12 @@ ALTER TABLE `publisher`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -194,6 +222,12 @@ ALTER TABLE `media_type`
 --
 ALTER TABLE `publisher`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
